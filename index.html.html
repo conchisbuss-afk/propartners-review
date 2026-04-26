@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Partners Remodeling - Share Your Experience</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0f0f0f;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    padding: 40px 36px;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .logo { font-family:'Playfair Display',serif; font-size:12px; letter-spacing:3px; text-transform:uppercase; color:#c9a84c; margin-bottom:6px; }
+  .brand { font-family:'Playfair Display',serif; font-size:24px; color:#fff; margin-bottom:24px; }
+  .divider { width:36px; height:2px; background:#c9a84c; margin:0 auto 28px; }
+  .step-label { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#555; margin-bottom:10px; }
+  .question { font-size:17px; color:#e0e0e0; font-weight:500; margin-bottom:6px; }
+  .sub { font-size:13px; color:#666; margin-bottom:24px; line-height:1.5; }
+
+  .services {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .service-btn {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 14px 10px;
+    color: #aaa;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .service-btn .icon { font-size: 22px; display:block; margin-bottom:6px; }
+  .service-btn:hover, .service-btn.selected {
+    border-color: #c9a84c;
+    color: #fff;
+    background: #1e1a10;
+  }
+
+  .stars { display:flex; justify-content:center; gap:10px; margin-bottom:28px; }
+  .star { font-size:40px; cursor:pointer; color:#333; transition:all 0.15s; user-select:none; }
+  .star:hover, .star.active { color:#c9a84c; transform:scale(1.15); }
+
+  .q-item { text-align:left; margin-bottom:18px; }
+  .q-label { font-size:13px; color:#aaa; margin-bottom:8px; display:block; }
+  .options { display:flex; gap:8px; flex-wrap:wrap; }
+  .opt {
+    background:#111;
+    border:1px solid #2a2a2a;
+    border-radius:8px;
+    padding:8px 14px;
+    color:#888;
+    font-size:13px;
+    cursor:pointer;
+    transition:all 0.2s;
+    font-family:'DM Sans',sans-serif;
+  }
+  .opt:hover, .opt.selected { border-color:#c9a84c; color:#fff; background:#1e1a10; }
+
+  .review-box {
+    background:#111;
+    border:1px solid #c9a84c33;
+    border-radius:12px;
+    padding:18px;
+    text-align:left;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .review-box p { color:#ddd; font-size:14px; line-height:1.7; white-space:pre-wrap; }
+  .copy-hint { font-size:11px; color:#555; margin-top:10px; display:block; }
+
+  textarea {
+    width:100%; background:#111; border:1px solid #333; border-radius:12px;
+    color:#e0e0e0; font-family:'DM Sans',sans-serif; font-size:14px;
+    padding:14px; resize:none; height:110px; outline:none; margin-bottom:18px; transition:border 0.2s;
+  }
+  textarea:focus { border-color:#c9a84c; }
+  textarea::placeholder { color:#444; }
+
+  .private-note {
+    background:#111; border:1px solid #2a2a2a; border-radius:10px;
+    padding:14px; margin-bottom:18px; text-align:left;
+  }
+  .private-note p { color:#888; font-size:12px; line-height:1.5; }
+  .private-note strong { color:#c9a84c; }
+
+  .btn {
+    background:#c9a84c; color:#0f0f0f; border:none; border-radius:12px;
+    padding:15px 28px; font-family:'DM Sans',sans-serif; font-size:14px;
+    font-weight:500; cursor:pointer; width:100%; transition:all 0.2s; letter-spacing:0.3px;
+  }
+  .btn:hover { background:#dbb85c; transform:translateY(-1px); }
+  .btn:disabled { background:#333; color:#666; cursor:not-allowed; transform:none; }
+  .btn-secondary {
+    background:transparent; color:#666; border:1px solid #2a2a2a; margin-top:10px;
+  }
+  .btn-secondary:hover { background:#222; color:#999; transform:none; }
+
+  .emoji { font-size:46px; margin-bottom:14px; display:block; }
+  .ty-title { font-family:'Playfair Display',serif; font-size:22px; color:#fff; margin-bottom:10px; }
+  .ty-text { color:#666; font-size:13px; line-height:1.6; }
+
+  .step { display:none; }
+  .step.active { display:block; animation: fadeUp 0.4s ease forwards; }
+</style>
+</head>
+<body>
+
+<!-- STEP 1: Service Selection -->
+<div class="card active" id="s1">
+  <div class="logo">Pro Partners</div>
+  <div class="brand">Remodeling LLC</div>
+  <div class="divider"></div>
+  <div class="step-label">Step 1 of 3</div>
+  <div class="question">What service did we do for you?</div>
+  <div class="sub">Select everything that applies</div>
+  <div class="services">
+    <button class="service-btn" onclick="toggleService(this,'Kitchen Remodeling')"><span class="icon">🍳</span>Kitchen Remodeling</button>
+    <button class="service-btn" onclick="toggleService(this,'Bathroom Remodeling')"><span class="icon">🚿</span>Bathroom Remodeling</button>
+    <button class="service-btn" onclick="toggleService(this,'Full Home Renovation')"><span class="icon">🏠</span>Full Home Renovation</button>
+    <button class="service-btn" onclick="toggleService(this,'Basement Finishing')"><span class="icon">⬇️</span>Basement Finishing</button>
+    <button class="service-btn" onclick="toggleService(this,'Flooring')"><span class="icon">🪵</span>Flooring</button>
+    <button class="service-btn" onclick="toggleService(this,'Concrete & Foundation')"><span class="icon">🏗️</span>Concrete & Foundation</button>
+    <button class="service-btn" onclick="toggleService(this,'Commercial Construction')"><span class="icon">🏢</span>Commercial Construction</button>
+    <button class="service-btn" onclick="toggleService(this,'Excavation & Site Work')"><span class="icon">🚜</span>Excavation & Site Work</button>
+  </div>
+  <button class="btn" id="s1btn" onclick="goTo('s2')" disabled>Continue →</button>
+</div>
+
+<!-- STEP 2: Experience Questions + Stars -->
+<div class="card step" id="s2">
+  <div class="logo">Pro Partners</div>
+  <div class="brand">Remodeling LLC</div>
+  <div class="divider"></div>
+  <div class="step-label">Step 2 of 3</div>
+  <div class="question">How was your experience?</div>
+  <div class="sub">Tap the stars to rate us overall</div>
+  <div class="stars" id="stars">
+    <span class="star" data-val="1">★</span>
+    <span class="star" data-val="2">★</span>
+    <span class="star" data-val="3">★</span>
+    <span class="star" data-val="4">★</span>
+    <span class="star" data-val="5">★</span>
+  </div>
+  <div class="q-item">
+    <span class="q-label">Was the work completed on time?</span>
+    <div class="options">
+      <button class="opt" onclick="selectOpt(this,'time','Yes, on time')">✅ Yes, on time</button>
+      <button class="opt" onclick="selectOpt(this,'time','Mostly on time')">🕐 Mostly on time</button>
+      <button class="opt" onclick="selectOpt(this,'time','There were delays')">⚠️ There were delays</button>
+    </div>
+  </div>
+  <div class="q-item">
+    <span class="q-label">How was the quality of the work?</span>
+    <div class="options">
+      <button class="opt" onclick="selectOpt(this,'quality','Excellent quality')">⭐ Excellent</button>
+      <button class="opt" onclick="selectOpt(this,'quality','Good quality')">👍 Good</button>
+      <button class="opt" onclick="selectOpt(this,'quality','Could be better')">😐 Could be better</button>
+    </div>
+  </div>
+  <div class="q-item">
+    <span class="q-label">How was communication throughout the project?</span>
+    <div class="options">
+      <button class="opt" onclick="selectOpt(this,'comm','Great communication')">💬 Great</button>
+      <button class="opt" onclick="selectOpt(this,'comm','It was okay')">🤙 Okay</button>
+      <button class="opt" onclick="selectOpt(this,'comm','Hard to reach')">📵 Hard to reach</button>
+    </div>
+  </div>
+  <div class="q-item">
+    <span class="q-label">Would you hire us again?</span>
+    <div class="options">
+      <button class="opt" onclick="selectOpt(this,'again','Definitely yes')">💯 Definitely</button>
+      <button class="opt" onclick="selectOpt(this,'again','Maybe')">🤔 Maybe</button>
+      <button class="opt" onclick="selectOpt(this,'again','Probably not')">❌ Probably not</button>
+    </div>
+  </div>
+  <br>
+  <button class="btn" id="s2btn" onclick="processResults()" disabled>See Results →</button>
+</div>
+
+<!-- STEP 3A: Positive - Suggested Review -->
+<div class="card step" id="s3positive">
+  <div class="logo">Pro Partners</div>
+  <div class="brand">Remodeling LLC</div>
+  <div class="divider"></div>
+  <div class="step-label">Step 3 of 3</div>
+  <span class="emoji">🎉</span>
+  <div class="question">Thank you so much!</div>
+  <div class="sub" style="margin-bottom:20px;">Here's a suggested review based on your answers. Copy it and paste it into Google!</div>
+  <div class="review-box">
+    <p id="suggestedReview"></p>
+    <span class="copy-hint">✏️ Feel free to edit before posting</span>
+  </div>
+  <button class="btn" onclick="copyAndOpen()">📋 Copy Review & Open Google</button>
+  <button class="btn btn-secondary" onclick="goTo('s4thanks')">Done</button>
+</div>
+
+<!-- STEP 3B: Negative - Private Feedback -->
+<div class="card step" id="s3negative">
+  <div class="logo">Pro Partners</div>
+  <div class="brand">Remodeling LLC</div>
+  <div class="divider"></div>
+  <div class="step-label">Step 3 of 3</div>
+  <span class="emoji">🙏</span>
+  <div class="question">We're sorry to hear that.</div>
+  <div class="sub" style="margin-bottom:16px;">Please tell us what happened. We want to make it right.</div>
+  <div class="private-note">
+    <p><strong>Private only.</strong> This feedback goes directly to our team and will never be posted publicly.</p>
+  </div>
+  <textarea placeholder="Tell us what we could have done better..."></textarea>
+  <button class="btn" onclick="goTo('s4thanks')">Send Private Feedback</button>
+</div>
+
+<!-- STEP 4: Thank You -->
+<div class="card step" id="s4thanks">
+  <span class="emoji">💛</span>
+  <div class="ty-title">Thank You!</div>
+  <div class="ty-text">We truly appreciate your time. It helps us keep delivering quality work across Milwaukee.<br><br>— Pro Partners Remodeling LLC</div>
+</div>
+
+<script>
+  let selectedServices = [];
+  let selectedRating = 0;
+  let answers = { time:'', quality:'', comm:'', again:'' };
+
+  function toggleService(el, name) {
+    el.classList.toggle('selected');
+    if (selectedServices.includes(name)) {
+      selectedServices = selectedServices.filter(s => s !== name);
+    } else {
+      selectedServices.push(name);
+    }
+    document.getElementById('s1btn').disabled = selectedServices.length === 0;
+  }
+
+  function selectOpt(el, key, val) {
+    el.closest('.q-item').querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[key] = val;
+    checkS2();
+  }
+
+  function checkS2() {
+    const allAnswered = answers.time && answers.quality && answers.comm && answers.again && selectedRating > 0;
+    document.getElementById('s2btn').disabled = !allAnswered;
+  }
+
+  document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('mouseover', () => {
+      const val = parseInt(star.dataset.val);
+      document.querySelectorAll('.star').forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) <= val));
+    });
+    star.addEventListener('mouseout', () => {
+      document.querySelectorAll('.star').forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) <= selectedRating));
+    });
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.dataset.val);
+      document.querySelectorAll('.star').forEach(s => s.classList.toggle('active', parseInt(s.dataset.val) <= selectedRating));
+      checkS2();
+    });
+  });
+
+  function goTo(id) {
+    document.querySelectorAll('.card').forEach(c => { c.classList.remove('active'); c.classList.add('step'); });
+    const el = document.getElementById(id);
+    el.classList.remove('step');
+    el.classList.add('active');
+  }
+
+  function processResults() {
+    const isPositive = selectedRating >= 4 &&
+      !answers.quality.includes('better') &&
+      !answers.again.includes('not') &&
+      !answers.time.includes('delays');
+    if (isPositive) {
+      generateReview();
+      goTo('s3positive');
+    } else {
+      goTo('s3negative');
+    }
+  }
+
+  function generateReview() {
+    const service = selectedServices.join(' and ');
+    const stars = '⭐'.repeat(selectedRating);
+    let timePhrase = answers.time === 'Yes, on time' ? 'completed everything on time' : 'got the job done';
+    let qualityPhrase = answers.quality === 'Excellent quality' ? 'The quality of the work is excellent' : 'The work quality was really good';
+    let commPhrase = answers.comm === 'Great communication' ? 'Communication was great throughout the whole project' : 'They kept us in the loop';
+    let againPhrase = answers.again === 'Definitely yes' ? 'I would definitely hire them again and recommend them to anyone looking for a reliable contractor in Milwaukee.' : "I'd consider hiring them again for future projects.";
+    const review = `${stars}\n\nI hired Pro Partners Remodeling LLC for ${service} and I'm really happy with how it turned out. They ${timePhrase} and the crew was professional from start to finish.\n\n${qualityPhrase} — you can tell they take pride in their work. ${commPhrase}.\n\n${againPhrase}`;
+    document.getElementById('suggestedReview').innerText = review;
+  }
+
+  function copyAndOpen() {
+    const text = document.getElementById('suggestedReview').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      window.open('https://g.page/r/CXhezaQZRGvZEAE/review', '_blank');
+      goTo('s4thanks');
+    });
+  }
+</script>
+</body>
+</html>
